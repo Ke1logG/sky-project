@@ -1,0 +1,23 @@
+**/target/
+.idea
+*.iml
+*.class
+*Test.java
+**/test/
+# 日志文件
+*.log
+logs/
+
+# Maven
+*.jar
+*.war
+*.ear
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.swp
+*.bak
