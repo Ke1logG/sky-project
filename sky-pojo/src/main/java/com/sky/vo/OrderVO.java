@@ -2,15 +2,9 @@ package com.sky.vo;
 
 import com.sky.entity.OrderDetail;
 import com.sky.entity.Orders;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderVO extends Orders implements Serializable {
 
     //订单菜品信息
@@ -19,4 +13,27 @@ public class OrderVO extends Orders implements Serializable {
     //订单详情
     private List<OrderDetail> orderDetailList;
 
+    public OrderVO() {
+    }
+
+    public OrderVO(String orderDishes, List<OrderDetail> orderDetailList) {
+        this.orderDishes = orderDishes;
+        this.orderDetailList = orderDetailList;
+    }
+
+    public String getOrderDishes() {
+        return orderDishes;
+    }
+
+    public void setOrderDishes(String orderDishes) {
+        this.orderDishes = orderDishes;
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
 }

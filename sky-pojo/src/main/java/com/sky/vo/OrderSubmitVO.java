@@ -1,18 +1,9 @@
 package com.sky.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderSubmitVO implements Serializable {
     //订单id
     private Long id;
@@ -22,4 +13,81 @@ public class OrderSubmitVO implements Serializable {
     private BigDecimal orderAmount;
     //下单时间
     private LocalDateTime orderTime;
+
+    public OrderSubmitVO() {
+    }
+
+    public OrderSubmitVO(Long id, String orderNumber, BigDecimal orderAmount, LocalDateTime orderTime) {
+        this.id = id;
+        this.orderNumber = orderNumber;
+        this.orderAmount = orderAmount;
+        this.orderTime = orderTime;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public BigDecimal getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(BigDecimal orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(LocalDateTime orderTime) {
+        this.orderTime = orderTime;
+    }
+
+    public static class Builder {
+        private Long id;
+        private String orderNumber;
+        private BigDecimal orderAmount;
+        private LocalDateTime orderTime;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder orderNumber(String orderNumber) {
+            this.orderNumber = orderNumber;
+            return this;
+        }
+
+        public Builder orderAmount(BigDecimal orderAmount) {
+            this.orderAmount = orderAmount;
+            return this;
+        }
+
+        public Builder orderTime(LocalDateTime orderTime) {
+            this.orderTime = orderTime;
+            return this;
+        }
+
+        public OrderSubmitVO build() {
+            return new OrderSubmitVO(id, orderNumber, orderAmount, orderTime);
+        }
+    }
 }
