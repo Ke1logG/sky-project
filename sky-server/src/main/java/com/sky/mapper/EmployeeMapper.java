@@ -6,6 +6,8 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import com.sky.annotation.AutoFill;
+import com.sky.enumeration.OperationType;
 
 @Mapper
 public interface EmployeeMapper {
@@ -23,11 +25,12 @@ public interface EmployeeMapper {
      * @param employee
     */
     @Insert("insert into employee (name, username, passord, phone, sex, id_number, createtime, update_time, create_user, update_user)" + "values" + "(" + "#{name}, #{username}, #{password}, #{phone}, #{sex}, #{idNumber}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser}" + ")")
+    @AutoFill(value = OperationType.INSERT)
     void insert(Employee employee);
 
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
-
+    @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
 
     @Select("select * from employee where id = #{id}")
