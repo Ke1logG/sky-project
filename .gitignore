@@ -21,3 +21,5 @@ Thumbs.db
 *.tmp
 *.swp
 *.bak
+
+application-dev.yml
