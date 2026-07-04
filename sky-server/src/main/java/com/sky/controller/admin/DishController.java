@@ -13,7 +13,10 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.result.PageResult;
+
 import java.util.List;
+
+import com.sky.vo.DishVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +47,13 @@ public class DishController {
     public Result delete(List<Long> ids){
         dishService.deleteBatch(ids);
         return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询菜品")
+    public Result<DishVO> getById(Long id){
+        DishVO dishVO = dishService.getByIdWithFlavor(id);
+        return Result.success(dishVO);
     }
 
 }
