@@ -2,6 +2,8 @@ package com.sky.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
 import com.sky.entity.Dish;
 import com.sky.annotation.AutoFill;
 import com.sky.enumeration.OperationType;
@@ -32,5 +34,9 @@ public interface DishMapper {
 
     @Delete("delete from dish where id = #{id}")
     void deleteById(Long id);
+
+    @AutoFill(value= OperationType.UPDATE)
+    void update(Dish dish);
+
 
 }
