@@ -14,13 +14,16 @@ import com.sky.exception.LoginFailedException;
 import com.sky.properties.WeChatProperties;
 import com.sky.mapper.UserMapper;
 
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -42,11 +45,15 @@ public class UserServiceImpl implements UserService{
         map.put("grant_type","authorization_code");
         String json = HttpClientUtil.doGet(WX_LOGIN, map);
 
+        log.info("微信请求参数: appid={}, code={}", wechatProperties.getAppid(), userLoginDTO.getCode());
+        log.info("微信返回结果: {}", json);
+
         JSONObject jsonObject = JSON.parseObject(json);
         String openid = jsonObject.getString("openid");
 
         //判断openid是否为空
         if(openid == null){
+            log.error("openid为空，微信错误信息: {}", jsonObject.getString("errmsg"));
             throw new LoginFailedException(MessageConstant.LOGIN_FAILED);
         }
 

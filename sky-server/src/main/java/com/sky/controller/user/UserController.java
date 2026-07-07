@@ -16,6 +16,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation("登录模块")
-    public Result<UserLoginVO> login(UserLoginDTO userLoginDTO){
+    public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO){
         User user = userService.wxLogin(userLoginDTO);
         //生成JWT令牌
         Map<String, Object> claims = new HashMap<>();
