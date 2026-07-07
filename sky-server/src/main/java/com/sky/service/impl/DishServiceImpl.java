@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import com.sky.entity.Dish;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.entity.DishFlavor;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.sky.vo.DishVO;
 import com.github.pagehelper.PageHelper;
@@ -123,6 +125,26 @@ public class DishServiceImpl implements DishService {
         }
 
     }
+
+    @Override
+    public List<DishVO> listWithFlavor(Dish dish) {
+    List<Dish> dishList = dishMapper.list(dish);
+
+    List<DishVO> dishVOList = new ArrayList<>();
+
+    for (Dish d : dishList) {
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(d,dishVO);
+
+        //根据菜品id查询对应的口味
+        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
+
+        dishVO.setFlavors(flavors);
+        dishVOList.add(dishVO);
+    }
+
+    return dishVOList;
+}
 
 
 }

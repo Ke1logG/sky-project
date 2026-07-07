@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import com.sky.service.DishService;
 import com.sky.result.PageResult;
 
 import java.util.List;
+import java.util.Set;
 
 import com.sky.vo.DishVO;
 
@@ -29,10 +31,17 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping
+    @ApiOperation("新增菜品")
     public Result save(@RequestBody DishDTO dishDTO){
         dishService.saveWithFlavor(dishDTO);
+
+        //清理缓存
+        String key = "dish_" + dishDTO.getCategoryId();
+        redisTemplate.delete(key);
         return Result.success();
     }
     
@@ -47,6 +56,9 @@ public class DishController {
     @ApiOperation("菜品批量删除")
     public Result delete(List<Long> ids){
         dishService.deleteBatch(ids);
+
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 
@@ -62,6 +74,10 @@ public class DishController {
     @ApiOperation("修改菜品")
     public Result update(@RequestBody DishDTO dishDTO){
         dishService.updateWithFlavor(dishDTO);
+
+        
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 

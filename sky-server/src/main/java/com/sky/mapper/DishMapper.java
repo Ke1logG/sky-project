@@ -3,6 +3,7 @@ package com.sky.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import java.util.List;
 
 import com.sky.entity.Dish;
 import com.sky.annotation.AutoFill;
@@ -37,6 +38,10 @@ public interface DishMapper {
 
     @AutoFill(value= OperationType.UPDATE)
     void update(Dish dish);
+
+    List<Dish> list(Dish dish);
+
+
 
 
 }
