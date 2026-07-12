@@ -34,7 +34,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
         Long currentId = BaseContext.getCurrentId();
-        shoppingCart.setId(currentId);
+        shoppingCart.setUserId(currentId);
 
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
 
@@ -59,6 +59,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             }else{
                 Long setmealId = shoppingCartDTO.getSetmealId();
                 Setmeal setmeal = setmealMapper.getById(setmealId);
+                if(setmeal == null){
+                    throw new RuntimeException("套餐不存在");
+                }
                 shoppingCart.setAmount(setmeal.getPrice());
                 shoppingCart.setCreateTime(LocalDateTime.now());
                 shoppingCart.setName(setmeal.getName());
@@ -71,6 +74,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
         
         
+    }
+
+
+    @Override
+    public List<ShoppingCart> showShoppingCarts(){
+        Long currentId = BaseContext.getCurrentId();
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserId(currentId);
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);;
+        return list;
+    }
+
+    @Override
+    public void cleanShoppingCart(){
+        Long userId = BaseContext.getCurrentId();
+        shoppingCartMapper.deleteByUserId(userId);
     }
 
 
