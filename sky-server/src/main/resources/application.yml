@@ -19,6 +19,9 @@ spring:
     database: ${sky.redis.database}
   cache:
     type: redis
+  output:
+    ansi:
+      enabled: always
 
 mybatis:
   #mapper配置文件
